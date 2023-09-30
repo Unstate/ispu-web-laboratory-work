@@ -6,13 +6,13 @@ const SideBar = () => {
   const pathname = location.pathname;
 
   return (
-    <aside className="w-1/6 min-h-screen bg-[#F1F2F7] p-6">
+    <aside className="w-1/6 min-h-screen bg-[#F1F2F7] py-10">
       <div className="flex flex-col gap-10">
         {routes.map((route, index) => (
           <Link key={index} to={route.path}>
             <div
-              className={`p-4 rounded-lg transition-all ease-in text-black text-lg hover:bg-[#4c35cd] hover:cursor-pointer hover:text-white text-center ${
-                pathname === route.path ? "bg-[#4c35cd] text-white" : ""
+              className={`p-4 py-6  transition-all ease-in text-black text-lg hover:bg-[#181513] hover:cursor-pointer hover:text-white text-center ${
+                pathname === route.path ? `${route.color}` : ""
               }`}
             >
               {route.title}

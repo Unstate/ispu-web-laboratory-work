@@ -4,7 +4,7 @@
 
 @keyframes slide-up {
   0% {
-    transform: translateY(100%);
+    transform: translateY(10%);
     opacity: 0;
   }
   100% {
@@ -14,5 +14,20 @@
 }
 
 .animate-slide-up {
-  animation: slide-up 0.3s ease-in-out;
+  animation: slide-up 0.35s ease-in-out;
+}
+
+
+::-webkit-scrollbar-track {
+  @apply rounded-[10px] bg-gray-300;
+}
+
+/* скрол полоска */
+::-webkit-scrollbar {
+  @apply w-[6px];
+}
+
+/* скрол бар */
+::-webkit-scrollbar-thumb {
+  @apply w-[6px] rounded-[10px] bg-[#FF5824];
 }
