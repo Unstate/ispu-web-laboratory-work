@@ -47,7 +47,7 @@ const QuestionElement: FC<QuestionElementProps> = memo(({
                 >
                   {question.checked && <Test className='w-[20px] h-[20px] rounded-full text-white ' />}
                 </button>
-                <p>{question.question}</p>
+                <p onClick={() => onClick(question.id)} className="hover:cursor-pointer select-none">{question.question}</p>
               </div>
             ))}
             

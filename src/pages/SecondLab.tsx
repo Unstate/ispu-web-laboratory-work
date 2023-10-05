@@ -94,7 +94,7 @@ const SecondLab = () => {
           <img src={goldenBoot} className="object-cover w-[90px] h-[110px]" />
           <img src={test2} className="object-cover w-[90px] h-[110px]" />
         </div>
-      </section>
+      </section> 
     </main>
   );
 };

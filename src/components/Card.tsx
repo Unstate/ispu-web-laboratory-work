@@ -1,19 +1,13 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { IHobbies } from "../constants/hobbies";
+import { useCardHover } from "../hooks/useCardHover";
 
 interface CardProps {
   card: IHobbies;
 }
 
 const Card: FC<CardProps> = ({ card }) => {
-  const [isHover, setIsHover] = useState<boolean>(false);
-
-  const handleOnHover = () => {
-    setIsHover(true);
-  };
-  const handleNotHover = () => {
-    setIsHover(false);
-  };
+  const { handleNotHover, handleOnHover, isHover } = useCardHover();
 
   return (
     <div

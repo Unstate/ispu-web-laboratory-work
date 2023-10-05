@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { routes } from "../utils/routes";
+import { routes } from "../constants/routes";
 
 const SideBar = () => {
   const location = useLocation();

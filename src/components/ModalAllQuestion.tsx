@@ -1,5 +1,4 @@
-import { FC, memo, useCallback, useState } from "react";
-import { ITasks, tasks } from "../constants/questions";
+import { FC, memo } from "react";
 import QuestionElement from "./QuestionElement";
 import { AiOutlineClose } from "react-icons/ai";
 import { IoMdArrowBack } from "react-icons/io";
@@ -7,6 +6,7 @@ import { bringingUserResponseToCorrectView } from "../utils/createUserAnswer";
 import { compareAnswers } from "../utils/checkUserAnswers";
 import { answer } from "../constants/answers";
 import { CiFaceFrown, CiFaceMeh, CiFaceSmile } from "react-icons/ci";
+import { useModalQuestions } from "../hooks/useModalQuestions";
 
 interface ModalAllQuestionProps {
   visible: boolean;
@@ -15,38 +15,15 @@ interface ModalAllQuestionProps {
 
 const ModalAllQuestion: FC<ModalAllQuestionProps> = memo(
   ({ visible, setVisable }) => {
-    const [userAnswers, setUserAnswers] = useState<ITasks[]>(tasks);
-    const [visibleAnswers, setVisibleAnswers] = useState<boolean>(false);
-    const [userResult, setUserResult] = useState<number>(0);
-    const handleOnClick = useCallback((id: number) => {
-      setUserAnswers((prevUserAnswers) => {
-        const updatedUserAnswers = prevUserAnswers.map((task) => {
-          const updatedQuestions = task.questions?.map((question) => {
-            if (question.id === id) {
-              return { ...question, checked: !question.checked };
-            }
-            return question;
-          });
-
-          // Возвращаем обновленную задачу с обновленными вопросами
-          return { ...task, questions: updatedQuestions };
-        });
-
-        return updatedUserAnswers;
-      });
-    }, []);
-
-    const handleOnChangeWithoutQuestions = (
-      id: number,
-      e: React.ChangeEvent<HTMLInputElement>
-    ) => {
-      setUserAnswers(
-        userAnswers.map((answer) =>
-          answer.id === id ? { ...answer, value: e.target.value } : answer
-        )
-      );
-    };
-
+    const {
+      handleOnChangeWithoutQuestions,
+      handleOnClick,
+      setUserResult,
+      setVisibleAnswers,
+      userAnswers,
+      userResult,
+      visibleAnswers,
+    } = useModalQuestions();
     return (
       <>
         {visible && (
