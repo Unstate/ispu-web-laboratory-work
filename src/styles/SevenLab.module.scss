@@ -1,0 +1,80 @@
+.wrapper {
+  min-height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &_gameWindow {
+    width: 500px;
+    height: 200px;
+    border: 1px solid #000;
+
+    &_dino {
+      width: 20px;
+      height: 50px;
+      background-color: red;
+      position: relative;
+      top: 150px;
+    }
+
+    &_cactus {
+      background-color: blue;
+      width: 20px;
+      height: 20px;
+      position: relative;
+      top: 130px;
+      left: 500px;
+      animation: cactus 1s infinite linear;
+    }
+
+    .jump {
+      animation: jump 0.3s linear;
+    }
+  }
+}
+
+@keyframes jump {
+  0% {
+    top: 150px;
+  }
+  10% {
+    top: 140px;
+  }
+  20% {
+    top: 130px;
+  }
+  30% {
+    top: 120px;
+  }
+  40% {
+    top: 110px;
+  }
+  50% {
+    top: 100px;
+  }
+  60% {
+    top: 110px;
+  }
+  70% {
+    top: 120px;
+  }
+  80% {
+    top: 130px;
+  }
+  90% {
+    top: 140px;
+  }
+  100% {
+    top: 150px;
+  }
+}
+
+@keyframes cactus {
+  0% {
+    left: 500px;
+  }
+  100% {
+    left: -20px;
+  }
+}
