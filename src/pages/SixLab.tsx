@@ -1,89 +1,125 @@
-import { Chart } from "chart.js/auto";
-import { useEffect, useMemo, useRef } from "react";
-import regression from "regression";
+import { useRef, useState } from "react";
 
 const SixLab = () => {
-  const dataT = useMemo(()=> {
-    return [{x:15,y:-20},{x:10,y:0},{x:5,y:20}]
-  },[])
-  const chartRef = useRef<HTMLCanvasElement>(null);
-  const chartInstance = useRef<Chart | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [inputs, setInputs] = useState({
+    x1: 0,
+    x2: 0,
+    y1: 0,
+    y2: 0,
+    x3: 0,
+    y3: 0,
+    showForm: false,
+  });
 
-  useEffect(() => {
-    if (chartRef.current) {
-      if (chartInstance.current) {
-        chartInstance.current.destroy();
-      }
+  const drawGraph = () => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const context = canvas.getContext("2d");
+      if (context) {
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, 0, 200, 200);
 
-      const ctx = chartRef.current.getContext('2d');
-      if (ctx) {
-        const regressionData = dataT.map(point => [point.x, point.y]);
-        //@ts-ignore
-        const result = regression.linear(regressionData);
-        // const result = regression.linear([[1,3],[2,7],[3,7]]);
+        const { x1, x2, y1, y2, x3 } = inputs;
+        const numberX1 = Number(x1);
+        const numberX2 = Number(x2);
+        const numberX3 = Number(x3);
+        const numberY1 = Number(y1);
+        const numberY2 = Number(y2);
 
-        const regressionLine = result.points.map(point => ({
-          x: point[0],
-          y: result.equation[0] * point[0] + result.equation[1],
-        }));
+        const b =
+          numberY1 - numberX1 * ((numberY2 - numberY1) / (numberX2 - numberX1));
+        const a = (numberY2 - numberY1) / (numberX2 - numberX1);
+        const y3 = a * numberX3 + b;
 
-        chartInstance.current = new Chart(ctx, {
-          type: 'line',
-          data: {
-            datasets: [
-              {
-                label: 'Data',
-                data: dataT,
-                showLine: false,
-                pointRadius: 5,
-              },
-              {
-                label: 'Regression Line',
-                data: regressionLine,
-                borderColor: 'red',
-                fill: false,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              x: {
-                type: 'linear',
-                position: 'bottom',
-                min: Math.min(...dataT.map(point => point.x)) - 1, 
-                max: Math.max(...dataT.map(point => point.x)) + 1, 
-              },
-              y: {
-                type: 'linear',
-                min: Math.min(...dataT.map(point => point.y)) - 1, 
-                max: Math.max(...dataT.map(point => point.y)) + 1, 
-              },
-            },
-          },
-        });
+        context.strokeStyle = "#109bfc";
+        context.lineWidth = 0.5;
+
+        context.beginPath();
+        context.moveTo(100, 100);
+        context.lineTo(100, 0);
+        context.moveTo(100, 100);
+        context.lineTo(100, 200);
+        context.moveTo(100, 100);
+        context.lineTo(0, 100);
+        context.moveTo(100, 100);
+        context.lineTo(200, 100);
+        context.moveTo(100, 0);
+        context.lineTo(103, 3);
+        context.moveTo(100, 0);
+        context.lineTo(97, 3);
+        context.moveTo(200, 100);
+        context.lineTo(197, 103);
+        context.moveTo(200, 100);
+        context.lineTo(197, 97);
+        context.font = "normal 8px sans-serif";
+        context.moveTo(100 + numberX1, 100 - numberY1);
+        context.lineTo(100 + numberX2, 100 - numberY2);
+        context.lineTo(100 + numberX3, 100 - y3);
+        context.stroke();
+
+        context.stroke();
+
+        setInputs({ ...inputs, y3: y3 });
       }
     }
-
-    return () => {
-      if (chartInstance.current) {
-        chartInstance.current.destroy();
-      }
-    };
-  }, [dataT]);
-
-  const predict = (input: number) => {
-    if (dataT.length === 0) return 'No data for regression';
-    const result = regression.linear(dataT.map(point => [point.x, point.y]));
-    const prediction = result.equation[0] * input + result.equation[1];
-    return `Prediction for input ${input}: ${prediction}`;
   };
 
+  const showForm = () => {
+    setInputs({ ...inputs, showForm: true });
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setInputs({ ...inputs, [id]: value });
+  };
   return (
-    <div style={{ width: '400px', height: '300px' }}>
-      <canvas ref={chartRef} width={400} height={400} />
-      <div>{predict(5)}</div>
+    <div>
+      <canvas ref={canvasRef} id="my1s" width="200" height="200"></canvas>
+      <br />
+      <div className="flex gap-10">
+        <input type="button" value="Input variables" onClick={showForm} />
+        <input type="button" value="Draw graph" onClick={drawGraph} />
+      </div>
+      {inputs.showForm && (
+        <div>
+          <p>
+            <label>
+              X1:{" "}
+              <input id="x1" value={inputs.x1} onChange={handleInputChange} />
+            </label>
+          </p>
+          <p>
+            <label>
+              Y1:{" "}
+              <input id="y1" value={inputs.y1} onChange={handleInputChange} />
+            </label>
+          </p>
+          <p>
+            <label>
+              X2:{" "}
+              <input id="x2" value={inputs.x2} onChange={handleInputChange} />
+            </label>
+          </p>
+          <p>
+            <label>
+              Y2:{" "}
+              <input id="y2" value={inputs.y2} onChange={handleInputChange} />
+            </label>
+          </p>
+          <p>
+            <label>
+              X3:{" "}
+              <input id="x3" value={inputs.x3} onChange={handleInputChange} />
+            </label>
+          </p>
+          <p className="border border-red-500">
+            <label>
+              Y3: <input id="y3" value={inputs.y3} disabled />
+            </label>
+          </p>
+        </div>
+      )}
     </div>
   );
 };
