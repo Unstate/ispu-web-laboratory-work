@@ -7,6 +7,7 @@ import {
   SixLab,
   ThirdLab,
 } from "../pages";
+import Test from "../pages/Test";
 
 interface IRoutes {
   path: string;
@@ -58,6 +59,12 @@ export const routes: IRoutes[] = [
     path: "/seven",
     title: "Seven labaratory",
     element: SevenLab,
+    color: 'bg-[#181513] text-white'
+  },
+  {
+    path: "/test",
+    title: "Test",
+    element: Test,
     color: 'bg-[#181513] text-white'
   },
 ];

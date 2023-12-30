@@ -1,58 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import styles from '../styles/SixLab.module.scss'
+import BarChart from "../components/BarChart.tsx";
 
-const BarChart = () => {
-  const canvasRef = useRef(null);
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-
-    if (!canvas) {
-      console.error("Canvas element not found.");
-      return;
-    }
-
-    //@ts-ignore
-    const ctx = canvas.getContext('2d');
-
-    // Данные для диаграммы (придуманные)
-    const data = [30, 50, 80, 120, 200];
-
-    // Размеры канваса
-    //@ts-ignore
-    const canvasWidth = canvas.width;
-    const canvasHeight = canvas.height;
-
-    // Максимальное значение данных для нормализации
-    const maxDataValue = Math.max(...data);
-
-    // Ширина и отступ столбцов
-    const barWidth = 40;
-    const barMargin = 20;
-
-    // Начальные координаты для первого столбца
-    let x = 50;
-    let y = canvasHeight - 30;
-
-    // Рисование столбчатой диаграммы
-    data.forEach(value => {
-      // Нормализация значения относительно максимального значения
-      const normalizedValue = (value / maxDataValue) * (canvasHeight - 60);
-
-      // Рисование столбца
-      ctx.fillStyle = 'blue';
-      ctx.fillRect(x, y - normalizedValue, barWidth, normalizedValue);
-
-      // Рисование значения над столбцом
-      ctx.fillStyle = 'black';
-      ctx.fillText(value.toString(), x + barWidth / 2, y - normalizedValue - 5);
-
-      // Переход к следующему столбцу
-      x += barWidth + barMargin;
-    });
-  }, []);
-
-  return <canvas ref={canvasRef} width={400} height={300} style={{ border: '1px solid #ccc' }} />;
-};
 
 const SixLab = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -128,25 +78,26 @@ const SixLab = () => {
     setInputs({ ...inputs, [id]: value });
   };
   return (
-    <div>
-      <canvas ref={canvasRef} id="my1s" width="200" height="200"></canvas>
-      <br />
-      <div className="flex gap-10">
-        <input type="button" value="Input variables" onClick={showForm} />
-        <input type="button" value="Draw graph" onClick={drawGraph} />
+    <div className={styles.wrapper}>
+      <div className={styles.wrapper_graphContainer}>
+        <canvas className={styles.wrapper_graphContainer_graph} ref={canvasRef} id="my1s" width="200" height="200"></canvas>
+        <div className={styles.wrapper_graphContainer_btnsContainer}>
+          <input className={styles.wrapper_graphContainer_btnsContainer_btn} type="button" value="Input variables" onClick={showForm}/>
+          <input className={styles.wrapper_graphContainer_btnsContainer_btn} type="button" value="Draw graph" onClick={drawGraph}/>
+        </div>
       </div>
       {inputs.showForm && (
-        <div>
-          <p>
-            <label>
-              X1:{" "}
-              <input id="x1" value={inputs.x1} onChange={handleInputChange} />
-            </label>
-          </p>
-          <p>
-            <label>
-              Y1:{" "}
-              <input id="y1" value={inputs.y1} onChange={handleInputChange} />
+          <div>
+            <p>
+              <label>
+                X1:{" "}
+                <input id="x1" value={inputs.x1} onChange={handleInputChange}/>
+              </label>
+            </p>
+            <p>
+              <label>
+                Y1:{" "}
+                <input id="y1" value={inputs.y1} onChange={handleInputChange} />
             </label>
           </p>
           <p>

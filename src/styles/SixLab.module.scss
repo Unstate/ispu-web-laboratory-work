@@ -1,0 +1,38 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+
+  &_graphContainer {
+    border: 1px solid red;
+    width: 25%;
+
+    &_graph {
+      width: 100%;
+    }
+
+    &_btnsContainer {
+      display: flex;
+      gap:1rem;
+      width: 100%;
+      justify-content: center;
+      margin: 10px;
+
+      &_btn {
+        cursor: pointer;
+        border:1px solid red;
+        border-radius: 10px;
+        color:#000000;
+        transition: background-color 0.2s ease-out;
+        padding:10px 20px;
+
+        &:hover {
+          color: #fff;
+          background: red;
+        }
+      }
+    }
+  }
+}
