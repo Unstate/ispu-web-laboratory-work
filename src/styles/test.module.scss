@@ -1,28 +1,84 @@
 .wrapper {
     padding: 20px;
     width: 100%;
+    display:flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 
-    .products {
-        background:teal;
-        width: 100%;
-        height:100%;
-        display:grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: auto;
-        gap: 20px;
+    .infoAboutPlayer {
+        color:#000000;
+        font-size:3rem;
+    }
 
-        &_item {
-            background:yellow;
-            display:grid;
-            grid-template-columns: 1fr;
-            grid-template-rows: 3fr 2fr 1fr;
-            gap: 20px;
-            padding: 5%;
+    .tictactoeContainer {
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        grid-template-rows: repeat(3,1fr);
+        gap:10px;
+        width: 50%;
+        height: 50%;
 
-            &_section  {
-                background:gray;
+        .item {
+            border: 2px solid gray;
+            color:gray;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            background-color: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size:6rem;
+
+            @media screen and (max-width:900px) {
+                font-size:3rem;
             }
+
+            &:hover {
+                background-color: gray;
+                color: #fff;
+            }
+        }
+
+        .winItem {
+            background-color: aqua;
+            color: #ffffff;
+            border-color: aqua;
+            pointer-events: none;
+
+            &:hover {
+                background-color: aqua;
+                color: #ffffff;
+            }
+        }
+
+        .notWinItem {
+            background-color: gray;
+            color: #ffffff;
+            opacity: 0.5;
+            pointer-events: none;
         }
     }
 
+    .endGameInfoWrapper {
+        display: flex;
+        gap:2rem;
+        align-items: center;
+
+        .restartButton {
+            border: 2px solid aqua;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            transition: all 0.3s ease-in-out;
+            background-color: transparent;
+
+            &:hover {
+                background-color: aqua;
+                color: #ffffff;
+            }
+        }
+    }
 }
