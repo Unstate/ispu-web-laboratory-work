@@ -1,7 +1,4 @@
-import { answer } from "../constants/answers";
 import { IQuestions, ITasks } from "../constants/questions";
-import { compareAnswers } from "./checkUserAnswers";
-
 export interface IReturnData {
   [key: number]: string | string[];
 }
